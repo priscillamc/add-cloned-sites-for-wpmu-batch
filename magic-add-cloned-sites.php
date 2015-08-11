@@ -25,7 +25,7 @@ $copy_images = ( isset($_POST['acswpmu_copyimages']) && $_POST['acswpmu_copyimag
 //if ($_POST['acswpmu_posts'] == 'on') { $copy_posts = TRUE; }
 //if ($_POST['acswpmu_pages'] == 'on') { $copy_pages = TRUE; }
 
-$pluginUrl = WP_PLUGIN_URL.'/'.str_replace(basename( __FILE__),"",plugin_basename(__FILE__));
+$pluginUrl = plugins_url( '/', __FILE__ );
 
 // get admin email
 $admin_info = get_userdata($user_id);
@@ -191,9 +191,20 @@ foreach($the_array as $line) {
 	
 	// Add custom data to newly duplicated blog
 	if(!$error) {
-		$full_url = "http://" . $fulldomain;
+		$full_url = is_ssl()? "https://":"http://";
+		$full_url .= $fulldomain;
+		
 		if(!$blogname) { $blogname = $siteurl; }
-		$fileupload_url = $full_url . "/files";
+		
+		// If using the old file structure
+		if( get_site_option( 'ms_files_rewriting' ) ){
+			$fileupload_url = $full_url . "/files";
+			$fileupload_path = 'wp-content/blogs.dir/' . $new_blog_id . '/files';
+		}
+		else {
+			$fileupload_url = '';
+			$fileupload_path = '';	
+		}
 		
 		// update the cloned table with the new data and blog_id
 		update_blog_option ($new_blog_id, 'siteurl', $full_url);
@@ -202,7 +213,7 @@ foreach($the_array as $line) {
 		update_blog_option ($new_blog_id, 'admin_email', $admin_email);
 		update_blog_option ($new_blog_id, 'home', $full_url);
 		update_blog_option ($new_blog_id, 'fileupload_url', $fileupload_url);
-		update_blog_option ($new_blog_id, 'upload_path', 'wp-content/blogs.dir/' . $new_blog_id . '/files');
+		update_blog_option ($new_blog_id, 'upload_path', $fileupload_path);
 		$new_options_table = $wpdb->prefix . $new_blog_id . '_options';
 		$old_name = $wpdb->prefix . $template_id . '_user_roles';
 		$new_name = $wpdb->prefix . $new_blog_id . '_user_roles';
@@ -250,14 +261,22 @@ foreach($the_array as $line) {
 	// Special thanks go to you guys!
 	if(!$error AND $copy_images) {
 		global $wp_filesystem;
-
-		$dir_to_copy = ABSPATH . 'wp-content/blogs.dir/' . $template_id . '/files';
-		$dir_to_copy_into = ABSPATH .'wp-content/blogs.dir/' . $new_blog_id . '/files';
-
+		
+		if ( get_site_option( 'ms_files_rewriting' ) ) {
+			// Still using the old WordPress < 3.5 file structure
+			$dir_to_copy = ABSPATH . 'wp-content/blogs.dir/' . $template_id . '/files';
+			$dir_to_copy_into = ABSPATH . 'wp-content/blogs.dir/' . $new_blog_id . '/files';
+		}
+		else {
+			// Use the WordPress 3.5+ file structure
+			$upload_dir = wp_upload_dir();
+			$dir_to_copy = $upload_dir['basedir'] . '/sites/' . $template_id;
+			$dir_to_copy_into = $upload_dir['basedir'] . '/sites/' . $new_blog_id;
+		}
+		
 		if ( is_dir( $dir_to_copy ) ) {
 
 			if ( wp_mkdir_p( $dir_to_copy_into ) ) {
-
 				require_once( ABSPATH . 'wp-admin/includes/class-wp-filesystem-base.php' );
 				require_once( ABSPATH . 'wp-admin/includes/class-wp-filesystem-direct.php' );
 
