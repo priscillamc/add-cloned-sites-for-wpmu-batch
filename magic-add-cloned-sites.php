@@ -20,8 +20,8 @@ $failed = NULL;
 // Get POST data
 $template_id = $_POST['acswpmu_template_id'];
 $user_id = $_POST['acswpmu_userid'];
-if ($_POST['acswpmu_domainmap'] == 'on') { $domainmap = TRUE; } else { $domainmap = FALSE; }
-if ($_POST['acswpmu_copyimages'] == 'on') { $copy_images = TRUE; } else { $copy_images = FALSE; }
+$domainmap = ( isset($_POST['acswpmu_domainmap']) && $_POST['acswpmu_domainmap'] == 'on' );
+$copy_images = ( isset($_POST['acswpmu_copyimages']) && $_POST['acswpmu_copyimages'] == 'on' );
 //if ($_POST['acswpmu_posts'] == 'on') { $copy_posts = TRUE; }
 //if ($_POST['acswpmu_pages'] == 'on') { $copy_pages = TRUE; }
 
