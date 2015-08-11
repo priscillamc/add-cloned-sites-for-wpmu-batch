@@ -3,9 +3,11 @@
 if ( is_multisite() ) { $subdomain_install = is_subdomain_install(); }
 
 // check if form is posted and if is safe
-if($_POST['acswpmu_hidden'] == 'Y' && check_admin_referer('go_do_magic','nonce_field')) {
+if(!empty($_POST) && check_admin_referer('go_do_magic','nonce_field')) {
 	//Form data sent -> do the magic
-	include('magic-add-cloned-sites.php');	
+	if( $_POST['acswpmu_hidden'] == 'Y' ){
+		include('magic-add-cloned-sites.php');	
+	}
 } else {
 	
 //Normal adminpage display
@@ -32,7 +34,7 @@ if(!$the_blogs) { $error['blogs'] = "there are no templates to choose from"; }
 if(!$the_users) { $error['users'] = "there are no users, which is impossible.."; }
 
 // if there are no errors continue
-if(!$error) {
+if( empty($error) ) {
 ?>
 <div class="wrap">
 	<?php    echo "<h2>" . __( 'Batch Add Cloned Sites for WPMU', 'acswpmu_trdom' ) . "</h2>"; ?>
