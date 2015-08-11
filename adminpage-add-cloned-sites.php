@@ -3,9 +3,11 @@
 if ( is_multisite() ) { $subdomain_install = is_subdomain_install(); }
 
 // check if form is posted and if is safe
-if($_POST['acswpmu_hidden'] == 'Y' && check_admin_referer('go_do_magic','nonce_field')) {
+if(!empty($_POST) && check_admin_referer('go_do_magic','nonce_field')) {
 	//Form data sent -> do the magic
-	include('magic-add-cloned-sites.php');	
+	if( $_POST['acswpmu_hidden'] == 'Y' ){
+		include('magic-add-cloned-sites.php');	
+	}
 } else {
 	
 //Normal adminpage display
