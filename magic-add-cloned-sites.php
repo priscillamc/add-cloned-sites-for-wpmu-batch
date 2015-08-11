@@ -32,7 +32,7 @@ $admin_info = get_userdata($user_id);
 $admin_email = $admin_info->user_email;
 
 // prepare/get data based on single / multi input
-if ($_POST['acswpmu_multiple'] == 'on'){
+if (isset($_POST['acswpmu_multiple']) && $_POST['acswpmu_multiple'] == 'on'){
 	// get post and trim to remove whitespace
 	$new_sites = trim($_POST['acswpmu_new_sites']);
 	// explode the post to lines
