@@ -1,6 +1,6 @@
 <?php
 /*
-Plugin Name: Add Cloned Sites for WPMU (batch)
+Plugin Name: Add Cloned Sites for WPMU (patched)
 Plugin URI: http://productbakery.com/wordpress/add-clone-sites-for-wpmu-batch
 Description: With this plugin you can simply batch add a bunch of domain names / sites to your WPMU install and use one of your existing sites as a template for the new sites. The existing blog will be cloned exactly including posts, layout, settings, etc. The plugin also takes care of domainmapping the newly created sites. (needs 'WordPress MU Domain Mapping' by Donncha to be installed). New is the option to clone without domainmapping, so pure cloning in batch! Please donate after each batch, I do need the caffeine, thanks!
 Version: 0.8.4.2
@@ -29,10 +29,10 @@ License: GPL2
 ?>
 <?php
 // Localization options
-
-if(!load_plugin_textdomain('acswpmu','/wp-content/languages/')) {
-	load_plugin_textdomain('acswpmu','/wp-content/plugins/add-cloned-sites-for-wpmu-batch/lang/');
+function acswpmu_load_textdomain(){
+	load_plugin_textdomain( 'acswpmu', false, dirname(plugin_basename(__FILE__)) . '/lang/' );	
 }
+add_action( 'plugins_loaded', 'acswpmu_load_textdomain' );
 
 // initialize plugin
 add_action( 'admin_init', 'acswpmu_admin_init' );
