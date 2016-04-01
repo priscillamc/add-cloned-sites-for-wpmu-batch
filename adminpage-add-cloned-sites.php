@@ -67,7 +67,7 @@ if( empty($error) ) {
 		?>
 		</select>
 		</p>
-        <? /*
+        <?php /*
 		<p><?php _e("Add a single site or batch add multiple sites?", 'acswpmu_trdom' ); ?>
 		Single <input type="radio" name="acswpmu_single" value="single"> / 
 		<input type="radio" name="acswpmu_single" value="multiple" checked> Multiple
