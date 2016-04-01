@@ -41,9 +41,9 @@ add_action('network_admin_menu', 'acswpmu_plugin_menu');
 
 function acswpmu_admin_init() {
        /* Register our stylesheet. */
-       wp_register_style( 'acswpmuStylesheet', WP_PLUGIN_URL . '/add-cloned-sites-for-wpmu-batch/css/style.css' );
-       wp_register_style( 'checkboxStylesheet', WP_PLUGIN_URL . '/add-cloned-sites-for-wpmu-batch/jquery.tzCheckbox/jquery.tzCheckbox.css' );
-       wp_register_style( 'jqueryUIStylesheet', WP_PLUGIN_URL . '/add-cloned-sites-for-wpmu-batch/css/smoothness/smoothness.css' );
+       wp_register_style( 'acswpmuStylesheet', plugins_url('/css/style.css', __FILE__) );
+       wp_register_style( 'checkboxStylesheet', plugins_url('/jquery.tzCheckbox/jquery.tzCheckbox.css', __FILE__) );
+       wp_register_style( 'jqueryUIStylesheet', plugins_url('/css/smoothness/smoothness.css', __FILE__) );
 	   /* Register our script. */
        wp_register_script( 'acswpmuScript', plugins_url('/js/myscript.js', __FILE__) );
        wp_register_script( 'checkboxScript', plugins_url('/jquery.tzCheckbox/jquery.tzCheckbox.js', __FILE__) );
