@@ -3,7 +3,7 @@
 Plugin Name: Add Cloned Sites for WPMU (patched)
 Plugin URI: http://productbakery.com/wordpress/add-clone-sites-for-wpmu-batch
 Description: With this plugin you can simply batch add a bunch of domain names / sites to your WPMU install and use one of your existing sites as a template for the new sites. The existing blog will be cloned exactly including posts, layout, settings, etc. The plugin also takes care of domainmapping the newly created sites. (needs 'WordPress MU Domain Mapping' by Donncha to be installed). New is the option to clone without domainmapping, so pure cloning in batch! Please donate after each batch, I do need the caffeine, thanks!
-Version: 0.8.4.2
+Version: 0.8.4.2-0.0.2
 Author: Frits Jan van Kempen
 Author URI: http://productbakery.com
 License: GPL2
@@ -41,9 +41,9 @@ add_action('network_admin_menu', 'acswpmu_plugin_menu');
 
 function acswpmu_admin_init() {
        /* Register our stylesheet. */
-       wp_register_style( 'acswpmuStylesheet', WP_PLUGIN_URL . '/add-cloned-sites-for-wpmu-batch/css/style.css' );
-       wp_register_style( 'checkboxStylesheet', WP_PLUGIN_URL . '/add-cloned-sites-for-wpmu-batch/jquery.tzCheckbox/jquery.tzCheckbox.css' );
-       wp_register_style( 'jqueryUIStylesheet', WP_PLUGIN_URL . '/add-cloned-sites-for-wpmu-batch/css/smoothness/smoothness.css' );
+       wp_register_style( 'acswpmuStylesheet', plugins_url('/css/style.css', __FILE__) );
+       wp_register_style( 'checkboxStylesheet', plugins_url('/jquery.tzCheckbox/jquery.tzCheckbox.css', __FILE__) );
+       wp_register_style( 'jqueryUIStylesheet', plugins_url('/css/smoothness/smoothness.css', __FILE__) );
 	   /* Register our script. */
        wp_register_script( 'acswpmuScript', plugins_url('/js/myscript.js', __FILE__) );
        wp_register_script( 'checkboxScript', plugins_url('/jquery.tzCheckbox/jquery.tzCheckbox.js', __FILE__) );
