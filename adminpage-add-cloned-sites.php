@@ -32,7 +32,7 @@ if(!$the_blogs) { $error['blogs'] = "there are no templates to choose from"; }
 if(!$the_users) { $error['users'] = "there are no users, which is impossible.."; }
 
 // if there are no errors continue
-if(!$error) {
+if( !isset($error) || !$error ) {
 ?>
 <div class="wrap">
 	<?php    echo "<h2>" . __( 'Batch Add Cloned Sites for WPMU', 'acswpmu_trdom' ) . "</h2>"; ?>
